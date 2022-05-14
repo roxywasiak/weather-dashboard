@@ -29,3 +29,15 @@ body {
   width: 100px;
   height: 100px;
 }
+
+/*the forecast x 5 cards*/
+.forecast-card {
+  width: 16rem;
+}
+
+/* the media queries */
+@media screen and (max-width: 576px) {
+  .forecast-card {
+    width: 100%;
+  }
+}
