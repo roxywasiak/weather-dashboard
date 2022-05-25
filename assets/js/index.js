@@ -64,7 +64,7 @@ const renderCurrentData = (data) => {
       <div class="text-center">
       <h2 class="my-2">${data.cityName}</h2>
       <h3 class="my-2">${moment
-        .unix(1652130296)
+        .unix(data.weatherData.current.dt + data.weatherData.timezone_offset)
         .format("dddd, Do MMM, YYYY")}</h3>
        <div>
           <img
@@ -74,8 +74,13 @@ const renderCurrentData = (data) => {
             alt="weather icon"
             class="shadow-sm p-3 mt-3 bg-body rounded border"
           />
+          </div>
+          </div>
 
-        <div class="col-sm-12 col-md-4 p-2 border bg-light fw-bold">
+          <!-- weather metric div -->
+          <div class="mt-4">
+            <div class="row g-0">
+          <div class="col-sm-12 col-md-4 p-2 border bg-light fw-bold">
             Temperature
           </div>
         <div class="col-sm-12 col-md-8 p-2 border">${
@@ -109,19 +114,13 @@ const renderCurrentData = (data) => {
           </div>
         </div>
       </div>
-      UV Index
-      </div>
-      <div class="col-12 p-2 border">
-      <span class="text-white px-3 rounded-2 ${getUviClassName(each.uvi)}"
-        >${each.uvi}</span
-      >
     </div>`;
 
   weatherInfoContainer.append(currentWeatherCard);
 };
 
 const renderForecastData = (data) => {
-  const forecastWeatherCards = (each) => {
+  const createForecastCard = (each) => {
     const forecast = `<div class="card m-2 forecast-card">
     <div class="d-flex justify-content-center">
       <img
@@ -158,14 +157,15 @@ const renderForecastData = (data) => {
                   UV Index
                   </div>
                   <div class="col-12 p-2 border">
-                    <span class="bg-success text-white px-3 rounded-2"
-                      >${each.uvi}</span
-                    >
+                    <span class="text-white px-3 rounded-2 ${getUviClassName(
+                      each.uvi
+                    )}"
+                     >${each.uvi}</span>
                     </div>
                     </div>
                   </div>
                 </div>
-                </div>`;
+              </div>`;
 
     return forecast;
 
@@ -183,6 +183,44 @@ const renderForecastData = (data) => {
       ${forecastCards}
     </div>
   </div>`;
+
+  weatherInfoContainer.append(forecastWeatherCards);
+
+};
+
+const renderRecentSearches = () => {
+  // get recent searches from LS
+  const recentSearches = readFromLocalStorage("recentSearches", []);
+
+  // ["foo", "bar"]
+  if (recentSearches.length) {
+    const createRecentCity = (city) => {
+      return `<li
+        class="list-group-item border-top-0 border-end-0 border-start-0"
+        data-city="${city}"
+      >
+        ${city}
+      </li>`;
+    };
+
+    const recentCities = recentSearches.map(createRecentCity).join("");
+
+    // if render recent searches list
+    const ul = `<ul class="list-group rounded-0">
+      ${recentCities}
+    </ul>`;
+
+    // append to parent
+    recentSearchesContainer.append(ul);
+  } else {
+    // else empty show alert
+    const alert = `<div class="alert alert-warning" role="alert">
+      You have no recent searches.
+    </div>`;
+
+    // append to parent
+    recentSearchesContainer.append(alert);
+  }
 };
 
 const renderErrorAlert = () => {
@@ -255,40 +293,7 @@ const fetchWeatherData = async (cityName) => {
   };
 };
 
-const renderRecentSearches = () => {
-  // get recent searches from LS
-  const recentSearches = readFromLocalStorage("recentSearches", []);
 
-  // ["foo", "bar"]
-  if (recentSearches.length) {
-    const createRecentCity = (city) => {
-      return `<li
-        class="list-group-item border-top-0 border-end-0 border-start-0"
-        data-city="${city}"
-      >
-        ${city}
-      </li>`;
-    };
-
-    const recentCities = recentSearches.map(createRecentCity).join("");
-
-    // if render recent searches list
-    const ul = `<ul class="list-group rounded-0">
-      ${recentCities}
-    </ul>`;
-
-    // append to parent
-    recentSearchesContainer.append(ul);
-  } else {
-    // else empty show alert
-    const alert = `<div class="alert alert-warning" role="alert">
-      You have no recent searches.
-    </div>`;
-
-    // append to parent
-    recentSearchesContainer.append(alert);
-  }
-};
 
 const handleRecentSearchClick = async (event) => {
   const target = $(event.target);
@@ -336,4 +341,4 @@ const handleFormSubmit = async (event) => {
   recentSearchesContainer.click(handleRecentSearchClick);
   searchForm.submit(handleFormSubmit);
   $(document).ready(onReady);
-};
+
