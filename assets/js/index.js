@@ -185,7 +185,6 @@ const renderForecastData = (data) => {
   </div>`;
 
   weatherInfoContainer.append(forecastWeatherCards);
-
 };
 
 const renderRecentSearches = () => {
@@ -293,8 +292,6 @@ const fetchWeatherData = async (cityName) => {
   };
 };
 
-
-
 const handleRecentSearchClick = async (event) => {
   const target = $(event.target);
 
@@ -333,12 +330,12 @@ const handleFormSubmit = async (event) => {
       renderRecentSearches();
     }
   }
+};
 
-  const onReady = () => {
-    renderRecentSearches();
-  };
+const onReady = () => {
+  renderRecentSearches();
+};
 
-  recentSearchesContainer.click(handleRecentSearchClick);
-  searchForm.submit(handleFormSubmit);
-  $(document).ready(onReady);
-
+recentSearchesContainer.click(handleRecentSearchClick);
+searchForm.submit(handleFormSubmit);
+$(document).ready(onReady);
