@@ -81,7 +81,7 @@ const renderCurrentData = (data) => {
           <div class="mt-4">
             <div class="row g-0">
           <div class="col-sm-12 col-md-4 p-2 border bg-light fw-bold">
-            Temperature
+            Temp
           </div>
         <div class="col-sm-12 col-md-8 p-2 border">${
           data.weatherData.current.temp
@@ -110,7 +110,7 @@ const renderCurrentData = (data) => {
           <div class="col-sm-12 col-md-8 p-2 border">
           <span class="text-white px-3 rounded-2 ${getUviClassName(
             data.weatherData.current.uvi
-          )}">">${data.weatherData.current.uvi}</span>
+          )}">${data.weatherData.current.uvi}</span>
           </div>
         </div>
       </div>
@@ -118,18 +118,17 @@ const renderCurrentData = (data) => {
 
   weatherInfoContainer.append(currentWeatherCard);
 };
-
 const renderForecastData = (data) => {
   const createForecastCard = (each) => {
     const forecast = `<div class="card m-2 forecast-card">
-    <div class="d-flex justify-content-center">
-      <img
-        src="http://openweathermap.org/img/w/${each.weather[0].icon}.png"
-        class="shadow-sm p-3 mt-3 bg-body rounded border card-img-top weather-icon"
-        alt="weather icon"
+      <div class="d-flex justify-content-center">
+        <img
+          src="http://openweathermap.org/img/w/${each.weather[0].icon}.png"
+          class="shadow-sm p-3 mt-3 bg-body rounded border card-img-top weather-icon"
+          alt="weather icon"
         />
-        </div>
-        <div class="card-body">
+      </div>
+      <div class="card-body">
         <h5 class="card-title text-center">${moment
           .unix(each.dt)
           .format("ddd, Do MMM")}</h5>
@@ -143,29 +142,30 @@ const renderForecastData = (data) => {
           <div class="row g-0">
             <div class="col-12 p-2 border bg-light fw-bold">
               Humidity
-              </div>
-              <div class="col-12 p-2 border">${each.humidity}&percnt;</div>
             </div>
-            <div class="row g-0">
-              <div class="col-12 p-2 border bg-light fw-bold">
-                Wind Speed
-                </div>
-                <div class="col-12 p-2 border">${each.wind_speed} MPH</div>
-              </div>
-              <div class="row g-0">
-                <div class="col-12 p-2 border bg-light fw-bold">
-                  UV Index
-                  </div>
-                  <div class="col-12 p-2 border">
-                    <span class="text-white px-3 rounded-2 ${getUviClassName(
-                      each.uvi
-                    )}"
-                     >${each.uvi}</span>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>`;
+            <div class="col-12 p-2 border">${each.humidity}&percnt;</div>
+          </div>
+          <div class="row g-0">
+            <div class="col-12 p-2 border bg-light fw-bold">
+              Wind Speed
+            </div>
+            <div class="col-12 p-2 border">${each.wind_speed} MPH</div>
+          </div>
+          <div class="row g-0">
+            <div class="col-12 p-2 border bg-light fw-bold">
+              UV Index
+            </div>
+            <div class="col-12 p-2 border">
+              <span class="text-white px-3 rounded-2 ${getUviClassName(
+                each.uvi
+              )}"
+                >${each.uvi}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
 
     return forecast;
 
@@ -261,7 +261,7 @@ const fetchWeatherData = async (cityName) => {
     "https://api.openweathermap.org/data/2.5/weather",
     {
       q: cityName,
-      appid: "b7166079e1mshf482422d9a32c25p1d1b0djsn3ea8fbf64317",
+      appid: "86caf105f899ad2ff080198a074ce86b",
     }
   );
 
@@ -280,7 +280,7 @@ const fetchWeatherData = async (cityName) => {
       lon: lon,
       exclude: "minutely,hourly",
       units: "metric",
-      appid: "b7166079e1mshf482422d9a32c25p1d1b0djsn3ea8fbf64317",
+      appid: "86caf105f899ad2ff080198a074ce86b",
     }
   );
 
