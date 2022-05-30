@@ -28,7 +28,7 @@ I have used HTML, CSS, JavaScript , Moment JS, JQuery, and Bootstrap.
 
 Open weather api to retrieve the weather information.
 
-# Screenshots
+# Screenshotscd
 
 ![desktop-screenshot](./assets/screenshots/startweather.png)
 ![desktop-screenshot](./assets/screenshots/weathersearch.png)
